@@ -4,14 +4,9 @@ pipeline {
         stage("Compile") {
             steps {
                 echo "Compile"
+                echo ${WORKSPACE}
                 script {
                     checkout scm
-                    echo ${WORKSPACE}
-                    def project_name = "web-demo"
-                    def build_package_name = "web-demo-1.0.0-SNAPSHOT.jar"
-
-                    sh "mvn -f pom.xml clean install"
-
                 }
             }
         }
