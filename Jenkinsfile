@@ -7,7 +7,7 @@ pipeline {
                 echo "Compile"
                 script {
                     checkout scm
-                    sh "mvn -f pom.xml clean install"
+                    sh "/usr/local/bin/mvn -f pom.xml clean install"
                 }
             }
         }
