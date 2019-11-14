@@ -4,9 +4,9 @@ pipeline {
         stage("Compile") {
             steps {
                 echo "Compile"
-                echo "${WORKSPACE}"
                 script {
                     checkout scm
+                    sh "mvn -f pom.xml clean install"
                 }
             }
         }
