@@ -7,7 +7,7 @@ pipeline {
                 echo "Compile"
                 script {
                     checkout scm
-                    sh "/usr/local/bin/mvn -f pom.xml clean install"
+                    sh "mvn -f pom.xml clean install"
                 }
             }
         }
@@ -19,6 +19,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 echo "Deploy"
+                sh "java -jar target/web-demo-0.0.1-SNAPSHOT.jar"
             }
         }
     }
