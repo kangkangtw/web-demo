@@ -4,7 +4,7 @@ pipeline {
         stage("Compile") {
             steps {
                 echo "Compile"
-                echo ${WORKSPACE}
+                echo "${WORKSPACE}"
                 script {
                     checkout scm
                 }
