@@ -19,7 +19,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 echo "Deploy"
-                sh "java -jar target/web-demo-0.0.1-SNAPSHOT.jar"
+                sh "nohup java -jar target/web-demo-0.0.1-SNAPSHOT.jar & "
             }
         }
     }
