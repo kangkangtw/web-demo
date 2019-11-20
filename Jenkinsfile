@@ -20,7 +20,7 @@ pipeline {
             agent any
             steps {
                 echo "Deploy"
-                sh "nohup java -jar target/web-demo-0.0.1-SNAPSHOT.jar & "
+                sh "ansible ubuntuAnsible -m copy -a 'src=target/web-demo-0.0.1-SNAPSHOT.jar dest=/home/docker/ owner=docker group=docker mode=0755'"
             }
         }
     }
