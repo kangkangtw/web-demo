@@ -20,8 +20,8 @@ pipeline {
             agent any
             steps {
                 echo "Deploy"
-                sh "/usr/local/Cellar/ansible ubuntuAnsible -m copy -a 'src=target/web-demo-0.0.1-SNAPSHOT.jar dest=/home/docker/ owner=docker group=docker mode=0755'"
-                sh "/usr/local/Cellar/ansible ubuntuAnsible -m command -a 'java -jar /home/docker/web-demo-0.0.1-SNAPSHOT.jar'"
+                sh "/usr/local/bin/ansible ubuntuAnsible -m copy -a 'src=target/web-demo-0.0.1-SNAPSHOT.jar dest=/home/docker/ owner=docker group=docker mode=0755'"
+                sh "/usr/local/bin/ansible ubuntuAnsible -m command -a 'java -jar /home/docker/web-demo-0.0.1-SNAPSHOT.jar'"
             }
         }
     }
