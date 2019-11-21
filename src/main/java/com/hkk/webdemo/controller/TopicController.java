@@ -13,7 +13,8 @@ public class TopicController {
 
   @RequestMapping("/")
   public Object list() {
-    return topicService.list();
+    return "Hello World";
+//    return topicService.list();
   }
 
 }
