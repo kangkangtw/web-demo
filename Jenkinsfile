@@ -26,7 +26,6 @@ pipeline {
                     sleep 10
                     timeout(time: 30, unit: 'SECONDS') {
                         def result = sh returnStdout: true, script: "ansible ubuntuAnsible -m command -a 'curl localhost:9090'"
-                        println("result:" + result)
                         if (result.contains("Hello World")) {
                             println("Success")
                         } else {
