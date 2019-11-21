@@ -27,6 +27,8 @@ pipeline {
                     timeout(time: 30, unit: 'SECONDS') {
                         def result = sh returnStdout: true, script: "ansible ubuntuAnsible -m command -a 'curl localhost:9090'"
                         println("result:" + result)
+                        println("分隔符-----")
+
                     }
                 }
             }
