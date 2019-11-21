@@ -26,7 +26,8 @@ pipeline {
 
                 timeout(time: 30, unit: 'SECONDS') {
                     retry(3) {
-                        sh "ansible ubuntuAnsible -m command -a 'curl localhost:9090'"
+                        result = sh returnStdout: true ,script: "ansible ubuntuAnsible -m command -a 'curl localhost:9090'"
+                        println(result);
                     }
                 }
             }
