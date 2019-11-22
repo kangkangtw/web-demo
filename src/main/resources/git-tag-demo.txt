@@ -5,3 +5,18 @@ git add .
 git commit -m "第二次发布版本"
 git add .
 git commit -m "第三次发布版本"
+git tag // 查看分支
+git show v1.0 // 显示标签v1.0的详细信息
+git reset --hard commitId 回退到打标签的commitId
+git checkout -b bug-fix //重新使用一个本地分支保存此commitId的代码
+git checkout master //回到master的代码
+git reflog // 查看所有的日志，找到最后一次提交的commitId
+git reset --hard commitId // master分支回到最新提交的代码上
+git checkout bug-fix // 在bug-fix修改代码
+git commit -m "修复第一次发版本的紧急bug" // 提交代码
+git tag v2.0 // 打标签
+git checkout master //先切换到主干上
+git merge bugfix    //再合并修改bug的分支
+git push origin master // 推送到远程分支
+git push origin --tags // git push命令是不会推送标签的 一次推送所有标签到远程
+https://blog.csdn.net/fuchaosz/article/details/51698896
