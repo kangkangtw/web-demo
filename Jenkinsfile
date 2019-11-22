@@ -18,6 +18,9 @@ pipeline {
         stage("Deploy") {
             steps {
                 echo "Deploy"
+                timeout(time: 30, unit: 'MINUTES') {
+                    input message: 'Deploy this version?'
+                }
                 script {
                     sh "ansible ubuntuAnsible -m copy -a 'src=target/web-demo-0.0.1-SNAPSHOT.jar dest=/home/docker/ owner=docker group=root mode=0755'"
                     sh "ansible ubuntuAnsible -m script -a 'startApp.sh'"
