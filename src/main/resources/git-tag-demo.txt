@@ -1,2 +1,4 @@
 git commit -m "第一次发版本"
 git tag -a v1.0 -m "v1.0版本发布"
+git add a.txt
+git commit -m "第二次发布版本"
