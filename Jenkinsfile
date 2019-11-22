@@ -29,10 +29,15 @@ pipeline {
                         } else {
                             throw new Exception()
                         }
-
-
                     }
                 }
+            }
+        }
+    }
+    post {
+        success{
+            script{
+                echo 'Post Success'
             }
         }
     }
