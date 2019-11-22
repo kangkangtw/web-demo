@@ -1,8 +1,7 @@
 pipeline {
-    agent none
+    agent any
     stages {
         stage("Compile") {
-            agent any
             steps {
                 echo "Compile"
                 script {
@@ -17,7 +16,6 @@ pipeline {
             }
         }
         stage("Deploy") {
-            agent any
             steps {
                 echo "Deploy"
                 script {
