@@ -1,20 +1,41 @@
 package com.hkk.webdemo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Answers.RETURNS_DEEP_STUBS;
 import static org.mockito.Answers.RETURNS_SMART_NULLS;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class MockTest {
+
+    @Mock
+    private List mockList;
+
+    public MockTest(){
+        MockitoAnnotations.initMocks(this);
+    }
+
 
     //1.验证行为
     @Test
@@ -41,16 +62,6 @@ public class MockTest {
         //验证结果
         assertEquals("hello world world", result);
     }
-
-
-    @Test(expected = IOException.class)
-    public void whenThenThrow() throws IOException {
-        OutputStream outputStream = mock(OutputStream.class);
-        //预设当流关闭时抛出异常
-        doThrow(new IOException()).when(outputStream).close();
-        outputStream.close();
-    }
-
 
     //3.RETURNS_SMART_NULLS和RETURNS_DEEP_STUBS
     @Test
@@ -110,5 +121,85 @@ public class MockTest {
             this.railwayTicket = railwayTicket;
         }
     }
+
+    //4 模拟方法体抛出异常
+    @Test(expected = RuntimeException.class)
+    public void doThrowWhen(){
+        List mock = mock(List.class);
+        doThrow(new RuntimeException()).when(mock).add(1);
+        mock.add(1);
+    }
+
+    @Test
+    public void shorthand(){
+        mockList.add(1);
+        verify(mockList).add(1);
+    }
+
+    //6 参数匹配
+    @Test
+    public void with_unspecified_arguments(){
+        List list = mock(List.class);
+        //匹配任意参数
+        when(list.get(anyInt())).thenReturn(1);
+        assertEquals(1, list.get(1));
+        assertEquals(1, list.get(999));
+    }
+
+    //13 重置mock
+    @Test
+    public void reset_mock(){
+        List list = mock(List.class);
+        when(list.size()).thenReturn(10);
+        list.add(1);
+        assertEquals(10,list.size());
+        //重置mock，清除所有的互动和预设
+        reset(list);
+        assertEquals(0,list.size());
+    }
+
+    // 14 验证确切的调用次数
+    @Test
+    public void verifying_number_of_invocations(){
+        List list = mock(List.class);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        //验证是否被调用一次，等效于下面的times(1)
+        verify(list).add(1);
+        verify(list,times(1)).add(1);
+        //验证是否被调用2次
+        verify(list,times(2)).add(2);
+        //验证是否被调用3次
+        verify(list,times(3)).add(3);
+        //验证是否从未被调用过
+        verify(list,never()).add(4);
+        //验证至少调用一次
+        verify(list,atLeastOnce()).add(1);
+        //验证至少调用2次
+        verify(list,atLeast(2)).add(2);
+        //验证至多调用3次
+        verify(list,atMost(3)).add(3);
+    }
+
+    //15 连续调用
+    @Test(expected = RuntimeException.class)
+    public void consecutive_calls(){
+        //模拟连续调用返回期望值，如果分开，则只有最后一个有效
+        when(mockList.get(0)).thenReturn(0);
+        when(mockList.get(0)).thenReturn(1);
+        when(mockList.get(0)).thenReturn(2);
+        when(mockList.get(1)).thenReturn(0).thenReturn(1).thenThrow(new RuntimeException());
+        assertEquals(2,mockList.get(0));
+        assertEquals(2,mockList.get(0));
+        assertEquals(0,mockList.get(1));
+        assertEquals(1,mockList.get(1));
+        //第三次或更多调用都会抛出异常
+        mockList.get(1);
+    }
+
 }
 
