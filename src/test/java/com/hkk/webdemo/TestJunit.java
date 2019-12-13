@@ -48,7 +48,7 @@ public class TestJunit {
 
     @Test(timeout = 1000)
     public void timeOut() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(5000);
+        TimeUnit.MICROSECONDS.sleep(500);
         System.out.println("in test case 1");
     }
 
