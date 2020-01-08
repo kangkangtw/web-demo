@@ -1,5 +1,7 @@
 package com.hkk.webdemo.task;
 
+import java.util.Random;
+import org.apache.commons.lang3.RandomUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,18 @@ public class ScheduledTasks {
     @Scheduled(fixedDelay = 1000 * 60 * 10)
     public void fixedRateTest() {
         LOG.info("fixedRateTest execute " + DateTime.now().toString("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Scheduled(cron = "0/10 * * * * ?")
+    public void cronTest() {
+        LOG.info("cronTest execute " + DateTime.now().toString("yyyy-MM-dd HH:mm:ss"));
+        try {
+            int sleepSecond = RandomUtils.nextInt(5000, 15000);
+            LOG.info("sleep:" + sleepSecond);
+            Thread.sleep(sleepSecond);
+        } catch (InterruptedException e) {
+            LOG.error("Execute error", e);
+        }
     }
 
 
