@@ -1,6 +1,5 @@
 package com.hkk.webdemo.task;
 
-import java.util.Random;
 import org.apache.commons.lang3.RandomUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -13,9 +12,11 @@ public class ScheduledTasks {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScheduledTasks.class);
 
-    @Scheduled(fixedDelay = 1000 * 60 * 10)
+    @Scheduled(fixedDelay = 1000 * 10)
     public void fixedRateTest() {
         LOG.info("fixedRateTest execute " + DateTime.now().toString("yyyy-MM-dd HH:mm:ss"));
+        LOG.error("errorMsg");
+        throw new RuntimeException();
     }
 
     @Scheduled(cron = "0/10 * * * * ?")

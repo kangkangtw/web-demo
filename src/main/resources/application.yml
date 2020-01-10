@@ -15,3 +15,6 @@ mybatis-plus:
   global-config:
     db-config:
       db-type: mysql
+
+logging:
+  path:../logs
