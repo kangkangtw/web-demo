@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    echo "Compile"
     print env
     stages {
         stage("Compile") {
