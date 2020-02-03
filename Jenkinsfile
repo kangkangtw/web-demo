@@ -5,8 +5,8 @@ pipeline {
             steps {
                 echo "Compile"
                 script {
-                    echo "env"
-                    print ${env}
+                    env.GIT_BRANCH_NAME = sh(returnStdout: true, script: 'git symbolic-ref --short -q HEAD').trim()
+                    echo "${env.GIT_BRANCH_NAME}"
                     checkout scm
                     sh "mvn -f pom.xml clean install"
                 }
