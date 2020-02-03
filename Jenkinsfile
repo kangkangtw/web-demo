@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    echo "Compile"
-    print ${env}
     stages {
         stage("Compile") {
+            echo "env"
+            print ${env}
             steps {
                 echo "Compile"
                 script {
