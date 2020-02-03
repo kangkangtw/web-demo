@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    print env
     stages {
         stage("Compile") {
             steps {
