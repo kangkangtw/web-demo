@@ -5,8 +5,7 @@ pipeline {
             steps {
                 echo "Compile"
                 script {
-                    def GIT_BRANCH = ${env.GIT_BRANCH}
-                    env.GIT_BRANCH_NAME = GIT_BRANCH.substring(7)
+                    env.GIT_BRANCH_NAME = env.GIT_BRANCH.substring(7)
                     echo "${env.GIT_BRANCH_NAME}"
                     checkout scm
                     sh "mvn -f pom.xml clean install"
