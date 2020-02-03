@@ -2,11 +2,11 @@ pipeline {
     agent any
     stages {
         stage("Compile") {
-            echo "env"
-            print ${env}
             steps {
                 echo "Compile"
                 script {
+                    echo "env"
+                    print ${env}
                     checkout scm
                     sh "mvn -f pom.xml clean install"
                 }
