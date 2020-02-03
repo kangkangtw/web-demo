@@ -5,8 +5,9 @@ pipeline {
             steps {
                 echo "Compile"
                 script {
-                    env.GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-                    echo "${env.GIT_BRANCH}"
+                    def GIT_BRANCH = ${env.GIT_BRANCH}
+                    env.GIT_BRANCH_NAME = GIT_BRANCH.substring(7)
+                    echo "${env.GIT_BRANCH_NAME}"
                     checkout scm
                     sh "mvn -f pom.xml clean install"
                 }
